@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Myra"
+description = "A warm landing page for Myra, a Windows computer companion that helps people handle small everyday digital tasks."
+version = "1.0.0"
+id = "artifacts/myra-landing"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19173
+
+[services.development]
+run = "pnpm --filter @workspace/myra-landing run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/myra-landing", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/myra-landing/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19173"
+BASE_PATH = "/"
