@@ -80,7 +80,7 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
         <img src={`${ASSETS}character-idle.svg`} alt="" className="dialog-mascot" />
         <p className="eyebrow">A note from Myra</p>
         <h2 id="dialog-title">A little more room is on its way.</h2>
-        <p id="dialog-description">Myra is getting ready to help with everyday computer busywork. The Windows download is coming soon; for now, consider this her first hello.</p>
+        <p id="dialog-description">Myra is getting ready to help your computer do more for you. The Windows download is coming soon; for now, consider this her first hello.</p>
         <div className="coming-note"><span className="status-dot" /> Windows download coming soon</div>
         <button className="button button-dark dialog-ok" data-testid="button-dismiss-download" onClick={onClose}>Sounds good <ArrowRight size={16} /></button>
       </section>
@@ -117,8 +117,8 @@ function LiquidGlass() {
       <section className="hero section-wrap" id="top">
         <div className="hero-copy">
           <div className="eyebrow"><span className="eyebrow-mark" /> Your Windows work companion</div>
-          <h1>Less busywork.<br />More <em>you.</em></h1>
-          <p className="hero-description">Myra helps with the small computer jobs that chip away at your day: organizing files, gathering website details, and supported everyday Office tasks. Keep your attention for the work that matters.</p>
+          <h1>Your computer<br />should work<br /><em>for you.</em></h1>
+          <p className="hero-description">With Myra, your computer can help organize files, gather useful details from websites, and move supported Office tasks forward. You stay in control—and keep your focus on the work only you can do.</p>
           <div className="hero-actions">
             <button className="button button-dark" data-testid="button-meet-myra-hero" onClick={showDownload}>Meet Myra <ArrowRight size={16} /></button>
             <a className="text-link" href="#how" data-testid="link-see-what-she-can-do">See how she helps <ArrowDown size={15} /></a>
@@ -130,13 +130,13 @@ function LiquidGlass() {
           <div className="hello-note"><span className="status-dot" /> Here with you.</div>
           <img className="hero-mascot" src={`${ASSETS}character-idle.svg`} alt="Myra, a friendly character with glasses and a pink sweater" />
           <div className="hero-caption">You bring the task.<br /><strong>Myra helps carry it forward.</strong></div>
-          <div className="orbit-stamp" aria-hidden="true"><span>A LITTLE LESS</span><b>busywork</b><span>MORE ROOM TO THINK</span></div>
+          <div className="orbit-stamp" aria-hidden="true"><span>YOUR COMPUTER</span><b>on your side</b><span>READY WHEN YOU ARE</span></div>
           <span className="tiny-spark" aria-hidden="true" />
         </div>
       </section>
 
       <div className="ticker" aria-hidden="true">
-        <div className="ticker-track"><span>Less time in the weeds</span><i /><span>More room for good work</span><i /><span>Keep your momentum</span><i /><span>Less time in the weeds</span><i /><span>More room for good work</span><i /><span>Keep your momentum</span><i /></div>
+        <div className="ticker-track"><span>Your computer, on your side</span><i /><span>You stay in control</span><i /><span>Made to work with you</span><i /><span>Your computer, on your side</span><i /><span>You stay in control</span><i /><span>Made to work with you</span><i /></div>
       </div>
 
       <section className="intro section-wrap" id="how">
