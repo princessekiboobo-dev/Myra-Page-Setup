@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { ArrowDown, ArrowRight, AudioLines, Check, ChevronDown, FolderOpen, Globe2, Menu, MessageCircle, ShieldCheck, Sparkles, X } from 'lucide-react';
 
 const ASSETS = '/assets/';
+const DOWNLOAD_URL = 'https://github.com/princessekiboobo-dev/myra-releases/releases/download/v0.1.1/Myra.Private.Setup.0.1.1.exe';
 
 const tasks = [
   {
@@ -30,72 +31,8 @@ const tasks = [
   },
 ];
 
-function DownloadDialog({ onClose }: { onClose: () => void }) {
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
-
-  useEffect(() => {
-    const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    closeButtonRef.current?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        onCloseRef.current();
-        return;
-      }
-
-      if (event.key !== 'Tab') return;
-      const dialog = closeButtonRef.current?.closest('[role="dialog"]');
-      const focusable = dialog?.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
-      );
-      if (!focusable?.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = previousOverflow;
-      previouslyFocused?.focus();
-    };
-  }, []);
-
-  return (
-    <div className="dialog-backdrop" role="presentation" onClick={onClose}>
-      <section className="download-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description" onClick={(event) => event.stopPropagation()}>
-        <button ref={closeButtonRef} className="dialog-close" data-testid="button-close-download" aria-label="Close dialog" onClick={onClose}><X size={18} /></button>
-        <img src={`${ASSETS}character-idle.svg`} alt="" className="dialog-mascot" />
-        <p className="eyebrow">A note from Myra</p>
-        <h2 id="dialog-title">A little more room is on its way.</h2>
-        <p id="dialog-description">Myra is getting ready to help your computer do more for you. The Windows download is coming soon; for now, consider this her first hello.</p>
-        <div className="coming-note"><span className="status-dot" /> Windows download coming soon</div>
-        <button className="button button-dark dialog-ok" data-testid="button-dismiss-download" onClick={onClose}>Sounds good <ArrowRight size={16} /></button>
-      </section>
-    </div>
-  );
-}
-
 function LiquidGlass() {
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const showDownload = () => {
-    setDialogOpen(true);
-    setMenuOpen(false);
-  };
 
   return (
     <main className="myra-glass">
@@ -110,7 +47,7 @@ function LiquidGlass() {
         <nav id="main-navigation" className={`header-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">
           <a href="#how" data-testid="link-how-myra-helps" onClick={() => setMenuOpen(false)}>How Myra helps</a>
           <a href="#control" data-testid="link-your-say" onClick={() => setMenuOpen(false)}>Your say, always</a>
-          <button className="button button-small" data-testid="button-meet-myra-header" onClick={showDownload}>Meet Myra <ArrowRight size={15} /></button>
+          <a className="button button-small" href={DOWNLOAD_URL} data-testid="link-download-header" aria-label="Download Myra for Windows, version 0.1.1" onClick={() => setMenuOpen(false)}>Download Myra <ArrowRight size={15} /></a>
         </nav>
       </header>
 
@@ -120,10 +57,10 @@ function LiquidGlass() {
           <h1>Your computer<br />should work<br /><em>for you.</em></h1>
           <p className="hero-description">With Myra, your computer can help organize files, gather useful details from websites, and move supported Office tasks forward. You stay in control—and keep your focus on the work only you can do.</p>
           <div className="hero-actions">
-            <button className="button button-dark" data-testid="button-meet-myra-hero" onClick={showDownload}>Meet Myra <ArrowRight size={16} /></button>
+            <a className="button button-dark" href={DOWNLOAD_URL} data-testid="link-download-hero" aria-label="Download Myra for Windows, version 0.1.1">Download Myra <ArrowRight size={16} /></a>
             <a className="text-link" href="#how" data-testid="link-see-what-she-can-do">See how she helps <ArrowDown size={15} /></a>
           </div>
-          <p className="hero-platform"><span className="windows-mark" aria-hidden="true"><i /><i /><i /><i /></span> Windows desktop · download coming soon</p>
+          <p className="hero-platform"><span className="windows-mark" aria-hidden="true"><i /><i /><i /><i /></span> Available for Windows · v0.1.1</p>
         </div>
         <div className="hero-art">
           <div className="hero-art-paper" />
@@ -211,8 +148,8 @@ function LiquidGlass() {
           <p className="eyebrow">A little more room for what matters</p>
           <h2>Let the little things<br />move along with <em>Myra.</em></h2>
           <p>Make space for the work you want to give your attention to.</p>
-          <button className="button button-light" data-testid="button-meet-myra-footer" onClick={showDownload}>Meet Myra <ArrowRight size={16} /></button>
-          <span className="closing-small">Windows download coming soon.</span>
+          <a className="button button-light" href={DOWNLOAD_URL} data-testid="link-download-footer" aria-label="Download Myra for Windows, version 0.1.1">Download Myra <ArrowRight size={16} /></a>
+          <span className="closing-small">Windows app · version 0.1.1</span>
         </div>
         <span className="closing-doodle doodle-left" aria-hidden="true">+</span>
         <span className="closing-doodle doodle-right" aria-hidden="true">+</span>
@@ -225,7 +162,6 @@ function LiquidGlass() {
         <a className="back-top" href="#top" data-testid="link-back-to-top">Back to top ↑</a>
       </footer>
 
-      {dialogOpen && <DownloadDialog onClose={() => setDialogOpen(false)} />}
     </main>
   );
 }
