@@ -150,17 +150,105 @@
   box-shadow: inset 2px 2px 4px rgba(255,255,255,.85), 0 7px 20px rgba(219,87,133,.2);
 }
 
-.myra-glass .ticker {
+.myra-glass .compatibility-strip {
+  position: relative;
+  overflow: hidden;
   border-block: 1px solid rgba(255,255,255,.9);
-  background: linear-gradient(100deg, rgba(255,255,255,.7), rgba(249,225,220,.9) 48%, rgba(255,255,255,.76));
+  background: linear-gradient(100deg, rgba(255,255,255,.76), rgba(249,225,220,.9) 48%, rgba(255,255,255,.8));
   box-shadow: inset 0 1px 0 #fff, 0 8px 26px rgba(82,54,57,.06);
-  color: #5f4f53;
   -webkit-backdrop-filter: blur(16px) saturate(1.15);
   backdrop-filter: blur(16px) saturate(1.15);
 }
 
-.myra-glass .ticker-track { font-size: 15px; }
-.myra-glass .ticker-track i { background: #df5785; box-shadow: 0 0 0 4px rgba(223,87,133,.1); }
+.myra-glass .compatibility-inner {
+  display: grid;
+  grid-template-columns: minmax(235px, .9fr) minmax(0, 2.1fr);
+  align-items: center;
+  gap: clamp(22px, 4vw, 56px);
+  padding-block: 18px;
+}
+
+.myra-glass .compatibility-title {
+  margin: 0 0 5px;
+  color: #493e43;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.myra-glass .compatibility-note {
+  max-width: 270px;
+  margin: 0;
+  color: #71636a;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.myra-glass .compatibility-marquee {
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.myra-glass .compatibility-track {
+  display: flex;
+  width: 200%;
+  align-items: center;
+  animation: compatibility-scroll 34s linear infinite;
+}
+
+.myra-glass .compatibility-group {
+  display: flex;
+  flex: 0 0 50%;
+  width: 50%;
+  align-items: center;
+  justify-content: space-around;
+  gap: 16px;
+}
+
+.myra-glass .compatibility-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #55464d;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.myra-glass .compatibility-icon {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  flex: none;
+  place-items: center;
+  border-radius: 7px;
+  color: white;
+  font: 700 16px/1 'DM Sans', sans-serif;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 3px 8px rgba(52,39,47,.13);
+}
+
+.myra-glass .compatibility-icon-word { background: #2B579A; }
+.myra-glass .compatibility-icon-excel { background: #217346; }
+.myra-glass .compatibility-icon-powerpoint { background: #D24726; }
+.myra-glass .compatibility-icon-windows {
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: skewY(-7deg);
+}
+
+.myra-glass .compatibility-icon-windows i { display: block; background: #0078D4; }
+.myra-glass .compatibility-marquee:hover .compatibility-track {
+  animation-play-state: paused;
+}
+
+@keyframes compatibility-scroll {
+  to { transform: translateX(-50%); }
+}
+
 .myra-glass .intro { padding-top: 139px; padding-bottom: 145px; }
 .myra-glass .section-kicker { color: #71636a; }
 .myra-glass .section-kicker span:first-child { color: #c94275; }
@@ -330,6 +418,9 @@
   .myra-glass .header-nav { gap: 17px; }
   .myra-glass .hero { min-height: 590px; }
   .myra-glass .hero h1 { font-size: clamp(46px, 7.5vw, 64px); }
+  .myra-glass .compatibility-inner { grid-template-columns: 1fr; gap: 10px; }
+  .myra-glass .compatibility-copy { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+  .myra-glass .compatibility-note { max-width: 360px; text-align: right; }
 }
 
 @media (max-width: 640px) {
@@ -361,6 +452,13 @@
   .myra-glass .header-nav.is-open { display: flex; }
   .myra-glass .header-nav > a { min-height: 36px; }
   .myra-glass .header-nav .button { align-self: flex-start; }
+  .myra-glass .compatibility-inner { padding-block: 14px; gap: 10px; }
+  .myra-glass .compatibility-copy { display: block; text-align: center; }
+  .myra-glass .compatibility-title { margin-bottom: 3px; font-size: 13px; }
+  .myra-glass .compatibility-note { margin-inline: auto; font-size: 10px; text-align: center; }
+  .myra-glass .compatibility-group { gap: 8px; }
+  .myra-glass .compatibility-item { flex-direction: column; gap: 4px; font-size: 10px; }
+  .myra-glass .compatibility-icon { width: 25px; height: 25px; }
   .myra-glass .hero { padding-top: 61px; }
   .myra-glass .hero h1 { font-size: clamp(43px, 11.7vw, 68px); }
   .myra-glass .hero-description { color: #5a4e55; }
@@ -386,4 +484,12 @@
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+  .myra-glass .compatibility-track {
+    width: 100%;
+    animation: none !important;
+    transform: none !important;
+  }
+  .myra-glass .compatibility-group[aria-hidden="true"] { display: none; }
+  .myra-glass .compatibility-group { width: 100%; flex-basis: 100%; }
+  .myra-glass .compatibility-marquee { overflow: visible; mask-image: none; }
 }

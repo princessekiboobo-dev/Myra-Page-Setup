@@ -33,6 +33,35 @@ const tasks = [
   },
 ];
 
+const compatibilityTools = [
+  { name: 'Windows', mark: 'windows' },
+  { name: 'Word', mark: 'W' },
+  { name: 'Excel', mark: 'X' },
+  { name: 'PowerPoint', mark: 'P' },
+];
+
+function CompatibilityLogoGroup({ decorative = false }: { decorative?: boolean }) {
+  return (
+    <div
+      className="compatibility-group"
+      role={decorative ? undefined : 'list'}
+      aria-label={decorative ? undefined : 'Windows and supported Microsoft Office apps'}
+      aria-hidden={decorative ? true : undefined}
+    >
+      {compatibilityTools.map(({ name, mark }) => (
+        <div className="compatibility-item" role={decorative ? undefined : 'listitem'} key={name}>
+          {mark === 'windows' ? (
+            <span className="compatibility-icon compatibility-icon-windows" aria-hidden="true"><i /><i /><i /><i /></span>
+          ) : (
+            <span className={`compatibility-icon compatibility-icon-${name.toLowerCase()}`} aria-hidden="true">{mark}</span>
+          )}
+          <span>{name}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function LiquidGlass() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -74,9 +103,20 @@ function LiquidGlass() {
         </div>
       </section>
 
-      <div className="ticker" aria-hidden="true">
-        <div className="ticker-track"><span>Your computer, on your side</span><i /><span>You stay in control</span><i /><span>Made to work with you</span><i /><span>Your computer, on your side</span><i /><span>You stay in control</span><i /><span>Made to work with you</span><i /></div>
-      </div>
+      <section className="compatibility-strip" aria-labelledby="compatibility-title">
+        <div className="compatibility-inner section-wrap">
+          <div className="compatibility-copy">
+            <h2 className="compatibility-title" id="compatibility-title">Made for your Windows workflow</h2>
+            <p className="compatibility-note">Supports selected tasks in Word, Excel, and PowerPoint. Compatibility depends on your setup.</p>
+          </div>
+          <div className="compatibility-marquee" aria-label="Compatible apps">
+            <div className="compatibility-track">
+              <CompatibilityLogoGroup />
+              <CompatibilityLogoGroup decorative />
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="intro section-wrap" id="how">
         <div className="section-kicker"><span>01</span><span>The little jobs add up</span></div>
