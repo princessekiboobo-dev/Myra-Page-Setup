@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Copy, Download, Share2, Sparkles } from 'lucide-react';
+import { HOME_URL } from '@/lib/site';
 
 type ThanksPageProps = {
   downloadUrl: string;
@@ -7,8 +8,8 @@ type ThanksPageProps = {
 
 export default function ThanksPage({ downloadUrl }: ThanksPageProps) {
   const [shareMessage, setShareMessage] = useState('');
-  const homeUrl = import.meta.env.BASE_URL;
-  const shareUrl = new URL(homeUrl, window.location.origin).toString();
+  const homeUrl = HOME_URL;
+  const shareUrl = HOME_URL;
 
   useEffect(() => {
     const previousTitle = document.title;
