@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ArrowDown, ArrowRight, AudioLines, Check, ChevronDown, FolderOpen, Globe2, Menu, MessageCircle, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { useLocation } from 'wouter';
 import ThanksPage from '@/pages/thanks';
+import AdminPage from '@/pages/admin';
+import DownloadPage from '@/pages/download';
 
 const ASSETS = '/assets/';
 const DOWNLOAD_URL = 'https://github.com/princessekiboobo-dev/myra-releases/releases/download/v0.1.1/Myra.Private.Setup.0.1.1.exe';
@@ -117,12 +119,12 @@ function LiquidGlass() {
 
   const startDownload = () => {
     setMenuOpen(false);
-    setLocation('/thanks');
+    setLocation('/download');
   };
 
-  if (location === '/thanks') {
-    return <ThanksPage downloadUrl={DOWNLOAD_URL} />;
-  }
+  if (location === '/admin') return <AdminPage />;
+  if (location === '/download') return <DownloadPage />;
+  if (location === '/thanks') return <ThanksPage downloadUrl={DOWNLOAD_URL} />;
 
   return (
     <main className="myra-glass">
