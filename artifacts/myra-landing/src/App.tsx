@@ -46,18 +46,18 @@ function HeroMascot() {
     let finishBlink = 0;
     let cancelled = false;
 
-    const scheduleBlink = () => {
+    const scheduleBlink = (delay: number) => {
       nextBlink = window.setTimeout(() => {
         if (cancelled) return;
         if (!document.hidden) {
           setIsBlinking(true);
-          finishBlink = window.setTimeout(() => setIsBlinking(false), 150);
+          finishBlink = window.setTimeout(() => setIsBlinking(false), 300);
         }
-        scheduleBlink();
-      }, 2600 + Math.random() * 3600);
+        scheduleBlink(2600 + Math.random() * 1800);
+      }, delay);
     };
 
-    scheduleBlink();
+    scheduleBlink(900 + Math.random() * 700);
     return () => {
       cancelled = true;
       window.clearTimeout(nextBlink);
