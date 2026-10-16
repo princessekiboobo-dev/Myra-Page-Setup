@@ -1,99 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { ArrowDown, ArrowRight, AudioLines, Check, ChevronDown, FolderOpen, Globe2, Menu, MessageCircle, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { useLocation } from 'wouter';
 import ThanksPage from '@/pages/thanks';
 
 const ASSETS = '/assets/';
 const DOWNLOAD_URL = 'https://github.com/princessekiboobo-dev/myra-releases/releases/download/v0.1.1/Myra.Private.Setup.0.1.1.exe';
-
-function HeroMascot() {
-  const mascotRef = useRef<HTMLDivElement>(null);
-  const pupilsRef = useRef<SVGGElement>(null);
-  const [isBlinking, setIsBlinking] = useState(false);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    let animationFrame = 0;
-    const followPointer = (event: PointerEvent) => {
-      if (event.pointerType === 'touch') return;
-      const pointerX = event.clientX;
-      const pointerY = event.clientY;
-
-      cancelAnimationFrame(animationFrame);
-      animationFrame = requestAnimationFrame(() => {
-        const bounds = mascotRef.current?.getBoundingClientRect();
-        const pupils = pupilsRef.current;
-        if (!bounds || !pupils) return;
-
-        const gazeX = Math.max(-1, Math.min(1, (pointerX - (bounds.left + bounds.width / 2)) / (bounds.width / 2))) * 5;
-        const gazeY = Math.max(-1, Math.min(1, (pointerY - (bounds.top + bounds.height / 2)) / (bounds.height / 2))) * 4;
-        pupils.setAttribute('transform', `translate(${gazeX.toFixed(2)} ${gazeY.toFixed(2)})`);
-      });
-    };
-
-    window.addEventListener('pointermove', followPointer, { passive: true });
-    return () => {
-      window.removeEventListener('pointermove', followPointer);
-      cancelAnimationFrame(animationFrame);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    let nextBlink = 0;
-    let finishBlink = 0;
-    let cancelled = false;
-
-    const scheduleBlink = (delay: number) => {
-      nextBlink = window.setTimeout(() => {
-        if (cancelled) return;
-        if (!document.hidden) {
-          setIsBlinking(true);
-          finishBlink = window.setTimeout(() => setIsBlinking(false), 300);
-        }
-        scheduleBlink(2600 + Math.random() * 1800);
-      }, delay);
-    };
-
-    scheduleBlink(900 + Math.random() * 700);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(nextBlink);
-      window.clearTimeout(finishBlink);
-    };
-  }, []);
-
-  return (
-    <div className="hero-character" ref={mascotRef}>
-      <img className="hero-mascot" src={`${ASSETS}character-idle.svg`} alt="Myra, a friendly character with glasses and a pink sweater" />
-      <svg
-        className={`hero-mascot-eyes${isBlinking ? ' is-blinking' : ''}`}
-        viewBox="0 0 210 250"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <defs>
-          <clipPath id="hero-eye-left"><rect x="74" y="77" width="31" height="35" rx="7" /></clipPath>
-          <clipPath id="hero-eye-right"><rect x="111" y="77" width="31" height="35" rx="7" /></clipPath>
-        </defs>
-        <g transform="rotate(-7 105 135)">
-          <rect x="72" y="76" width="34" height="38" rx="8" fill="#FFFEFE" stroke="#1B1B1B" strokeWidth=".7" strokeOpacity=".65" />
-          <rect x="109" y="76" width="34" height="38" rx="8" fill="#FFFEFE" stroke="#1B1B1B" strokeWidth=".7" strokeOpacity=".65" />
-          <g ref={pupilsRef} className="hero-pupils">
-            <g clipPath="url(#hero-eye-left)"><rect x="89" y="86" width="12" height="20" rx="6" fill="#29252A" /></g>
-            <g clipPath="url(#hero-eye-right)"><rect x="119" y="86" width="12" height="20" rx="6" fill="#29252A" /></g>
-          </g>
-          <g className="hero-eyelids">
-            <rect x="74" y="77" width="31" height="35" rx="7" fill="#FFA16D" />
-            <rect x="111" y="77" width="31" height="35" rx="7" fill="#FFA16D" />
-          </g>
-        </g>
-      </svg>
-    </div>
-  );
-}
 
 const tasks = [
   {
@@ -244,7 +155,7 @@ function LiquidGlass() {
         <div className="hero-art">
           <div className="hero-art-paper" />
           <div className="hello-note"><span className="status-dot" /> Here with you.</div>
-          <HeroMascot />
+          <img className="hero-mascot" src={`${ASSETS}character-idle.svg`} alt="Myra, a friendly character with glasses and a pink sweater" />
           <div className="hero-caption">You bring the task.<br /><strong>Myra helps carry it forward.</strong></div>
           <div className="orbit-stamp" aria-hidden="true"><span>YOUR COMPUTER</span><b>on your side</b><span>READY WHEN YOU ARE</span></div>
           <span className="tiny-spark" aria-hidden="true" />
