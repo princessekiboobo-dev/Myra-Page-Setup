@@ -1,4 +1,4 @@
-import { json, setAdminCookie } from '../_myra';
+import { json, setAdminCookie } from '../_myra.js';
 
 export default function handler(req: any, res: any) {
   if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });

@@ -1,4 +1,4 @@
-import { isAdmin, json, pool } from '../_myra';
+import { isAdmin, json, pool } from '../_myra.js';
 
 export default async function handler(req: any, res: any) {
   if (!isAdmin(req)) return json(res, 401, { error: 'Unauthorized' });
