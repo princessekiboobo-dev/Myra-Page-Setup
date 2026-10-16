@@ -217,30 +217,13 @@
 }
 
 .myra-glass .compatibility-icon {
-  display: grid;
-  width: 29px;
-  height: 29px;
+  display: block;
+  width: 32px;
+  height: 32px;
   flex: none;
-  place-items: center;
-  border-radius: 7px;
-  color: white;
-  font: 700 16px/1 'DM Sans', sans-serif;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 3px 8px rgba(52,39,47,.13);
+  filter: drop-shadow(0 2px 3px rgba(52,39,47,.16));
 }
 
-.myra-glass .compatibility-icon-word { background: #2B579A; }
-.myra-glass .compatibility-icon-excel { background: #217346; }
-.myra-glass .compatibility-icon-powerpoint { background: #D24726; }
-.myra-glass .compatibility-icon-windows {
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  transform: skewY(-7deg);
-}
-
-.myra-glass .compatibility-icon-windows i { display: block; background: #0078D4; }
 .myra-glass .compatibility-marquee:hover .compatibility-track {
   animation-play-state: paused;
 }
@@ -458,7 +441,7 @@
   .myra-glass .compatibility-note { margin-inline: auto; font-size: 10px; text-align: center; }
   .myra-glass .compatibility-group { gap: 8px; }
   .myra-glass .compatibility-item { flex-direction: column; gap: 4px; font-size: 10px; }
-  .myra-glass .compatibility-icon { width: 25px; height: 25px; }
+  .myra-glass .compatibility-icon { width: 27px; height: 27px; }
   .myra-glass .hero { padding-top: 61px; }
   .myra-glass .hero h1 { font-size: clamp(43px, 11.7vw, 68px); }
   .myra-glass .hero-description { color: #5a4e55; }

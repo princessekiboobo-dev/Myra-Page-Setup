@@ -1,0 +1,1 @@
+- [Myra compatibility marks](myra-compatibility-marks.md) — Use the actual software marks the user chose in the trust carousel, not monogram substitutes.

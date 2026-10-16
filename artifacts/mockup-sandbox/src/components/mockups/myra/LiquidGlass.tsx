@@ -34,27 +34,76 @@ const tasks = [
 ];
 
 const compatibilityTools = [
-  { name: 'Windows', mark: 'windows' },
-  { name: 'Word', mark: 'W' },
-  { name: 'Excel', mark: 'X' },
-  { name: 'PowerPoint', mark: 'P' },
-];
+  'Windows',
+  'Word',
+  'Excel',
+  'PowerPoint',
+  'Chrome',
+] as const;
+
+function CompatibilityLogo({ name }: { name: (typeof compatibilityTools)[number] }) {
+  if (name === 'Windows') {
+    return (
+      <svg className="compatibility-icon" viewBox="0 0 448 512" aria-hidden="true" focusable="false">
+        <path fill="#0078D4" d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z" />
+      </svg>
+    );
+  }
+
+  if (name === 'Chrome') {
+    return (
+      <svg className="compatibility-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="#EA4335" d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0z" />
+        <path fill="#34A853" d="M1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29z" />
+        <path fill="#FBBC04" d="M15.273 7.636a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364z" />
+        <path fill="#4285F4" d="M12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z" />
+      </svg>
+    );
+  }
+
+  if (name === 'Word') {
+    return (
+      <svg className="compatibility-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path fill="#41A5EE" d="M5 7.5 21 4v32l-16-3.5z" />
+        <path fill="#2B7CD3" d="M19 8h17v24H19z" />
+        <path fill="#185ABD" d="M12 11h10v18H12z" />
+        <path fill="#fff" d="m9.6 15.1 2.3.2 1.5 7.1 1.8-6.8 2.1.2 1.8 7.1 1.6-6.8 2.2.2-2.8 10.6-2.1-.2-1.8-6.8-1.8 6.4-2.2-.2z" />
+      </svg>
+    );
+  }
+
+  if (name === 'Excel') {
+    return (
+      <svg className="compatibility-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path fill="#33C481" d="M5 7.5 21 4v32l-16-3.5z" />
+        <path fill="#21A366" d="M19 8h17v24H19z" />
+        <path fill="#107C41" d="M12 11h10v18H12z" />
+        <path fill="#fff" d="m13.4 15.2 2.4-.1 2.1 3.6 2.2-3.9 2.5-.1-3.4 5.4 3.5 5.5-2.5-.1-2.3-3.8-2.2 3.6-2.5-.1 3.4-5.3z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg className="compatibility-icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+      <circle cx="23" cy="20" r="15" fill="#ED6C47" />
+      <path fill="#FF8F6B" d="M21 7h15v26H21z" />
+      <path fill="#D35230" d="M4 10h20v20H4z" />
+      <path fill="#fff" d="M10 15h5.2c3.2 0 5.1 1.6 5.1 4.5s-1.9 4.6-5.1 4.6h-2v4H10zm5 6.7c1.4 0 2.1-.7 2.1-2.1s-.7-2.1-2.1-2.1h-1.8v4.2z" />
+    </svg>
+  );
+}
 
 function CompatibilityLogoGroup({ decorative = false }: { decorative?: boolean }) {
   return (
     <div
       className="compatibility-group"
       role={decorative ? undefined : 'list'}
-      aria-label={decorative ? undefined : 'Windows and supported Microsoft Office apps'}
+      aria-label={decorative ? undefined : 'Windows, Word, Excel, PowerPoint, and Chrome'}
       aria-hidden={decorative ? true : undefined}
     >
-      {compatibilityTools.map(({ name, mark }) => (
+      {compatibilityTools.map((name) => (
         <div className="compatibility-item" role={decorative ? undefined : 'listitem'} key={name}>
-          {mark === 'windows' ? (
-            <span className="compatibility-icon compatibility-icon-windows" aria-hidden="true"><i /><i /><i /><i /></span>
-          ) : (
-            <span className={`compatibility-icon compatibility-icon-${name.toLowerCase()}`} aria-hidden="true">{mark}</span>
-          )}
+          <CompatibilityLogo name={name} />
           <span>{name}</span>
         </div>
       ))}
@@ -107,7 +156,7 @@ function LiquidGlass() {
         <div className="compatibility-inner section-wrap">
           <div className="compatibility-copy">
             <h2 className="compatibility-title" id="compatibility-title">Made for your Windows workflow</h2>
-            <p className="compatibility-note">Supports selected tasks in Word, Excel, and PowerPoint. Compatibility depends on your setup.</p>
+            <p className="compatibility-note">Chrome browsing and supported Office tasks depend on your setup.</p>
           </div>
           <div className="compatibility-marquee" aria-label="Compatible apps">
             <div className="compatibility-track">
