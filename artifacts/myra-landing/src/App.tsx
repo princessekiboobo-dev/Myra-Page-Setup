@@ -148,7 +148,7 @@ function LiquidGlass() {
           <h1>Your computer<br />should work<br /><em>for you.</em></h1>
           <p className="hero-description">With Myra, your computer can help organize files, gather useful details from websites, and move supported Office tasks forward. You stay in control—and keep your focus on the work only you can do.</p>
           <div className="hero-actions">
-            <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-hero" aria-label="Download Myra for Windows, version 0.1.1" onClick={startDownload}>Download Myra <ArrowRight size={16} /></a>
+            <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-hero" aria-label="Start Myra for free" onClick={startDownload}>Start for free <ArrowRight size={16} /></a>
             <a className="text-link" href="#how" data-testid="link-see-what-she-can-do">See how she helps <ArrowDown size={15} /></a>
           </div>
           <p className="hero-platform"><span className="windows-mark" aria-hidden="true"><i /><i /><i /><i /></span> Available for Windows · v0.1.1</p>
