@@ -1,6 +1,6 @@
 {
-  "buildCommand": "pnpm run build",
-  "outputDirectory": "dist/public",
+  "buildCommand": "pnpm --dir artifacts/myra-landing run build",
+  "outputDirectory": "artifacts/myra-landing/dist/public",
   "installCommand": "pnpm install --frozen-lockfile",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
