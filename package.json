@@ -10,11 +10,9 @@
   },
   "private": true,
   "dependencies": {
-    "@replit/connectors-sdk": "^0.4.3",
-    "pg": "^8.16.3"
+    "@replit/connectors-sdk": "^0.4.3"
   },
   "devDependencies": {
-    "@types/node": "catalog:",
     "prettier": "^3.9.6",
     "typescript": "~5.9.3"
   }
