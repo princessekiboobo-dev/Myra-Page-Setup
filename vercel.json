@@ -2,5 +2,11 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist/public",
   "installCommand": "pnpm install --frozen-lockfile",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/terms", "destination": "/index.html" },
+    { "source": "/privacy", "destination": "/index.html" },
+    { "source": "/refunds", "destination": "/index.html" },
+    { "source": "/thanks", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
