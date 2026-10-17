@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowDown, ArrowRight, AudioLines, Check, ChevronDown, FolderOpen, Globe2, Menu, MessageCircle, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { useLocation } from 'wouter';
 import ThanksPage from '@/pages/thanks';
+import LegalPage from '@/pages/legal';
 
 const ASSETS = '/assets/';
 const DOWNLOAD_URL = 'https://github.com/princessekiboobo-dev/myra-releases/releases/download/v0.1.1/Myra.Private.Setup.0.1.1.exe';
@@ -124,6 +125,10 @@ function LiquidGlass() {
     return <ThanksPage downloadUrl={DOWNLOAD_URL} />;
   }
 
+  if (location === '/terms' || location === '/privacy' || location === '/refunds') {
+    return <LegalPage kind={location.slice(1) as 'terms' | 'privacy' | 'refunds'} />;
+  }
+
   return (
     <main className="myra-glass">
       <header className="site-header">
@@ -148,7 +153,7 @@ function LiquidGlass() {
           <h1>Your computer<br />should work<br /><em>for you.</em></h1>
           <p className="hero-description">With Myra, your computer can help organize files, gather useful details from websites, and move supported Office tasks forward. You stay in control—and keep your focus on the work only you can do.</p>
           <div className="hero-actions">
-            <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-hero" aria-label="Download Myra for Windows, version 0.1.1" onClick={startDownload}>Download Myra <ArrowRight size={16} /></a>
+            <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-hero" aria-label="Start Myra for free" onClick={startDownload}>Start for free <ArrowRight size={16} /></a>
             <a className="text-link" href="#how" data-testid="link-see-what-she-can-do">See how she helps <ArrowDown size={15} /></a>
           </div>
           <p className="hero-platform"><span className="windows-mark" aria-hidden="true"><i /><i /><i /><i /></span> Available for Windows · v0.1.1</p>
@@ -269,19 +274,6 @@ function LiquidGlass() {
         <p className="pricing-note">No charge during your trial. Subscription terms apply after the trial ends.</p>
       </section>
 
-      <section className="legal section-wrap" aria-labelledby="legal-title">
-        <div className="section-kicker"><span>05</span><span>Good to know</span></div>
-        <div className="legal-heading">
-          <h2 id="legal-title">Clear words.<br /><em>No fine-print fog.</em></h2>
-          <p>Here is the short version of the policies that keep Myra straightforward to use.</p>
-        </div>
-        <div className="legal-grid">
-          <article id="terms" className="legal-card"><span>Terms of service</span><h3>Use Myra thoughtfully.</h3><p>Myra is a Windows work companion. You are responsible for the instructions you give her, the apps and files you connect, and reviewing results before relying on them.</p><a href="#terms">Read the terms <ArrowRight size={14} /></a></article>
-          <article id="privacy" className="legal-card"><span>Privacy notice</span><h3>Your work stays yours.</h3><p>Myra uses the information needed to provide the service, improve reliability, and support your account. We do not sell your personal information.</p><a href="#privacy">Read the privacy notice <ArrowRight size={14} /></a></article>
-          <article id="refunds" className="legal-card"><span>Refund policy</span><h3>Fair when plans change.</h3><p>Cancel before your next renewal to avoid another charge. If you were charged unexpectedly, contact support and we will review the situation with you.</p><a href="#refunds">Read the refund policy <ArrowRight size={14} /></a></article>
-        </div>
-      </section>
-
       <section className="closing">
         <div className="closing-inner">
           <img src={`${ASSETS}character-idle.svg`} alt="" className="closing-mascot" />
@@ -299,9 +291,9 @@ function LiquidGlass() {
         <a className="brand footer-brand" href="#top" data-testid="link-footer-home"><img src={`${ASSETS}myra-logo.svg`} alt="" /><span>myra<span className="brand-period">.</span></span></a>
         <span className="footer-tagline">A little more room for good work.</span>
         <nav className="footer-policies" aria-label="Legal policies">
-          <a href="#terms">Terms</a>
-          <a href="#privacy">Privacy</a>
-          <a href="#refunds">Refunds</a>
+          <a href="/terms">Terms</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/refunds">Refunds</a>
         </nav>
         <span className="footer-credit">Made by Utterance</span>
         <a className="back-top" href="#top" data-testid="link-back-to-top">Back to top ↑</a>
