@@ -117,11 +117,6 @@ function LiquidGlass() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [location, setLocation] = useLocation();
 
-  const startDownload = () => {
-    setMenuOpen(false);
-    setLocation('/download');
-  };
-
   if (location === '/admin') return <AdminPage />;
   if (location === '/download') return <DownloadPage />;
   if (location === '/thanks') return <ThanksPage downloadUrl={DOWNLOAD_URL} />;
@@ -139,7 +134,7 @@ function LiquidGlass() {
         <nav id="main-navigation" className={`header-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">
           <a href="#how" data-testid="link-how-myra-helps" onClick={() => setMenuOpen(false)}>How Myra helps</a>
           <a href="#control" data-testid="link-your-say" onClick={() => setMenuOpen(false)}>Your say, always</a>
-          <a className="button button-small" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-header" aria-label="Download Myra for Windows, version 0.1.1" onClick={startDownload}>Download Myra <ArrowRight size={15} /></a>
+          <a className="button button-small" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-header" aria-label="Download Myra for Windows, version 0.1.1" >Download Myra <ArrowRight size={15} /></a>
         </nav>
       </header>
 
@@ -149,7 +144,7 @@ function LiquidGlass() {
           <h1>Your computer<br />should work<br /><em>for you.</em></h1>
           <p className="hero-description">With Myra, your computer can help organize files, gather useful details from websites, and move supported Office tasks forward. You stay in control—and keep your focus on the work only you can do.</p>
           <div className="hero-actions">
-            <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-hero" aria-label="Download Myra for Windows, version 0.1.1" onClick={startDownload}>Download Myra <ArrowRight size={16} /></a>
+            <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-hero" aria-label="Download Myra for Windows, version 0.1.1" >Download Myra <ArrowRight size={16} /></a>
             <a className="text-link" href="#how" data-testid="link-see-what-she-can-do">See how she helps <ArrowDown size={15} /></a>
           </div>
           <p className="hero-platform"><span className="windows-mark" aria-hidden="true"><i /><i /><i /><i /></span> Available for Windows · v0.1.1</p>
@@ -251,7 +246,7 @@ function LiquidGlass() {
           <p className="eyebrow">A little more room for what matters</p>
           <h2>Let the little things<br />move along with <em>Myra.</em></h2>
           <p>Make space for the work you want to give your attention to.</p>
-          <a className="button button-light" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-footer" aria-label="Download Myra for Windows, version 0.1.1" onClick={startDownload}>Download Myra <ArrowRight size={16} /></a>
+          <a className="button button-light" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-footer" aria-label="Download Myra for Windows, version 0.1.1" >Download Myra <ArrowRight size={16} /></a>
           <span className="closing-small">Windows app · version 0.1.1</span>
         </div>
         <span className="closing-doodle doodle-left" aria-hidden="true">+</span>
