@@ -137,6 +137,7 @@ function LiquidGlass() {
         <nav id="main-navigation" className={`header-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">
           <a href="#how" data-testid="link-how-myra-helps" onClick={() => setMenuOpen(false)}>How Myra helps</a>
           <a href="#control" data-testid="link-your-say" onClick={() => setMenuOpen(false)}>Your say, always</a>
+          <a href="#pricing" data-testid="link-pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
           <a className="button button-small" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-header" aria-label="Download Myra for Windows, version 0.1.1" onClick={startDownload}>Download Myra <ArrowRight size={15} /></a>
         </nav>
       </header>
@@ -243,6 +244,44 @@ function LiquidGlass() {
         <p className="fine-print">What Myra can do depends on your installed apps, setup, and permissions. She works with supported everyday tasks—not every app or every task automatically.</p>
       </section>
 
+      <section className="pricing section-wrap" id="pricing" aria-labelledby="pricing-title">
+        <div className="section-kicker"><span>04</span><span>Simple, human pricing</span></div>
+        <div className="pricing-heading">
+          <div>
+            <p className="eyebrow">Try Myra for three days</p>
+            <h2 id="pricing-title">More room for<br /><em>good work.</em></h2>
+          </div>
+          <p className="pricing-intro">Start with a 3-day free trial, then keep Myra by your side for $9/month. Cancel anytime before your next billing date.</p>
+        </div>
+        <div className="pricing-card">
+          <div className="pricing-card-copy">
+            <span className="pricing-badge">Myra membership</span>
+            <h3>$9 <small>/ month</small></h3>
+            <p>Everything you need to make everyday computer work feel lighter.</p>
+          </div>
+          <ul className="pricing-list">
+            <li><Check size={16} /> 3 days free to try</li>
+            <li><Check size={16} /> File, web, and supported Office help</li>
+            <li><Check size={16} /> You approve important actions</li>
+          </ul>
+          <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-start-trial" onClick={startDownload}>Start free trial <ArrowRight size={16} /></a>
+        </div>
+        <p className="pricing-note">No charge during your trial. Subscription terms apply after the trial ends.</p>
+      </section>
+
+      <section className="legal section-wrap" aria-labelledby="legal-title">
+        <div className="section-kicker"><span>05</span><span>Good to know</span></div>
+        <div className="legal-heading">
+          <h2 id="legal-title">Clear words.<br /><em>No fine-print fog.</em></h2>
+          <p>Here is the short version of the policies that keep Myra straightforward to use.</p>
+        </div>
+        <div className="legal-grid">
+          <article id="terms" className="legal-card"><span>Terms of service</span><h3>Use Myra thoughtfully.</h3><p>Myra is a Windows work companion. You are responsible for the instructions you give her, the apps and files you connect, and reviewing results before relying on them.</p><a href="#terms">Read the terms <ArrowRight size={14} /></a></article>
+          <article id="privacy" className="legal-card"><span>Privacy notice</span><h3>Your work stays yours.</h3><p>Myra uses the information needed to provide the service, improve reliability, and support your account. We do not sell your personal information.</p><a href="#privacy">Read the privacy notice <ArrowRight size={14} /></a></article>
+          <article id="refunds" className="legal-card"><span>Refund policy</span><h3>Fair when plans change.</h3><p>Cancel before your next renewal to avoid another charge. If you were charged unexpectedly, contact support and we will review the situation with you.</p><a href="#refunds">Read the refund policy <ArrowRight size={14} /></a></article>
+        </div>
+      </section>
+
       <section className="closing">
         <div className="closing-inner">
           <img src={`${ASSETS}character-idle.svg`} alt="" className="closing-mascot" />
@@ -259,6 +298,11 @@ function LiquidGlass() {
       <footer className="site-footer">
         <a className="brand footer-brand" href="#top" data-testid="link-footer-home"><img src={`${ASSETS}myra-logo.svg`} alt="" /><span>myra<span className="brand-period">.</span></span></a>
         <span className="footer-tagline">A little more room for good work.</span>
+        <nav className="footer-policies" aria-label="Legal policies">
+          <a href="#terms">Terms</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#refunds">Refunds</a>
+        </nav>
         <span className="footer-credit">Made by Utterance</span>
         <a className="back-top" href="#top" data-testid="link-back-to-top">Back to top ↑</a>
       </footer>
