@@ -171,6 +171,19 @@ function LiquidGlass() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [location, setLocation] = useLocation();
   const [accessOpen, setAccessOpen] = useState(false);
+  const [session, setSession] = useState<Awaited<ReturnType<ReturnType<typeof createClient>['auth']['getSession']>>['data']['session']>(null);
+  const supabase = useMemo(() => {
+    const url = (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL) as string | undefined;
+    const key = (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) as string | undefined;
+    return url && key ? createClient(url, key) : null;
+  }, []);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession));
+    return () => listener.subscription.unsubscribe();
+  }, [supabase]);
 
   const startDownload = () => {
     setMenuOpen(false);
@@ -205,7 +218,23 @@ function LiquidGlass() {
           <a href="#how" data-testid="link-how-myra-helps" onClick={() => setMenuOpen(false)}>How Myra helps</a>
           <a href="#control" data-testid="link-your-say" onClick={() => setMenuOpen(false)}>Your say, always</a>
           <a href="#pricing" data-testid="link-pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
-          <a className="button button-small" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-header" aria-label="Download Myra for Windows, version 0.1.1" onClick={startDownload}>Download Myra <ArrowRight size={15} /></a>
+          {session ? (
+            <button
+              className="signed-in-profile"
+              type="button"
+              aria-label={`Signed in as ${session.user.email ?? 'your Google account'}. Sign out`}
+              onClick={() => supabase?.auth.signOut()}
+            >
+              {session.user.user_metadata?.avatar_url || session.user.user_metadata?.picture ? (
+                <img src={session.user.user_metadata.avatar_url || session.user.user_metadata.picture} alt="" />
+              ) : (
+                <span className="profile-initial">{(session.user.email?.[0] || 'M').toUpperCase()}</span>
+              )}
+              <span className="profile-copy"><strong>{session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'Signed in'}</strong><small>Sign out</small></span>
+            </button>
+          ) : (
+            <a className="button button-small" href="#pricing" onClick={startTrial}>Start for free <ArrowRight size={15} /></a>
+          )}
         </nav>
       </header>
 
