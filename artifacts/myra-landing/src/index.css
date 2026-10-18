@@ -15,7 +15,7 @@
 .policy-footer { width: min(800px, calc(100% - 48px)); margin: 0 auto; padding: 24px 0 40px; display: flex; justify-content: space-between; gap: 18px; color: #8b7f82; font-size: 12px; }
 .policy-footer a { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; }
 .access-overlay { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 20px; background: rgba(20, 27, 36, .62); backdrop-filter: blur(10px); }
-.access-modal { position: relative; width: min(100%, 860px); max-height: min(760px, calc(100vh - 40px)); overflow: auto; padding: 42px; border: 1px solid #eee7df; border-radius: 24px; background: var(--paper); box-shadow: 0 24px 80px rgba(20,27,36,.22); }
+.access-modal { position: relative; width: min(100%, 1120px); max-height: min(760px, calc(100vh - 40px)); overflow: auto; padding: 42px; border: 1px solid #eee7df; border-radius: 24px; background: var(--paper); box-shadow: 0 24px 80px rgba(20,27,36,.22); }
 .access-close { position: absolute; top: 18px; right: 18px; display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 50%; color: var(--muted-ink); background: transparent; }
 .access-modal h2 { margin: 20px 0 14px; font-size: clamp(38px, 7vw, 54px); line-height: .98; letter-spacing: -.07em; }
 .access-modal h2 em { color: var(--pink); font-family: var(--serif); font-weight: 500; }
