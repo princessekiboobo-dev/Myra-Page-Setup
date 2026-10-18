@@ -15,7 +15,7 @@
 .policy-footer { width: min(800px, calc(100% - 48px)); margin: 0 auto; padding: 24px 0 40px; display: flex; justify-content: space-between; gap: 18px; color: #8b7f82; font-size: 12px; }
 .policy-footer a { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; }
 .access-overlay { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 20px; background: rgba(20, 27, 36, .62); backdrop-filter: blur(10px); }
-.access-modal { position: relative; width: min(100%, 480px); max-height: min(720px, calc(100vh - 40px)); overflow: auto; padding: 38px; border: 1px solid #eee7df; border-radius: 24px; background: var(--paper); box-shadow: 0 24px 80px rgba(20,27,36,.22); }
+.access-modal { position: relative; width: min(100%, 860px); max-height: min(760px, calc(100vh - 40px)); overflow: auto; padding: 42px; border: 1px solid #eee7df; border-radius: 24px; background: var(--paper); box-shadow: 0 24px 80px rgba(20,27,36,.22); }
 .access-close { position: absolute; top: 18px; right: 18px; display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 50%; color: var(--muted-ink); background: transparent; }
 .access-modal h2 { margin: 20px 0 14px; font-size: clamp(38px, 7vw, 54px); line-height: .98; letter-spacing: -.07em; }
 .access-modal h2 em { color: var(--pink); font-family: var(--serif); font-weight: 500; }
@@ -29,7 +29,7 @@
 .whop-checkout > div { min-height: 360px; }
 .checkout-placeholder { margin-top: 20px; padding: 20px; border: 1px dashed #d9c9c4; border-radius: 14px; color: var(--muted-ink); font-size: 13px; line-height: 1.6; }
 .checkout-placeholder code { font-size: 11px; }
-@media (max-width: 680px) { .policy-header { width: calc(100% - 40px); min-height: 72px; } .policy-article { width: calc(100% - 40px); padding: 64px 0 76px; } .policy-article h1 { font-size: 48px; } .policy-intro { font-size: 16px; } .policy-footer { width: calc(100% - 40px); flex-direction: column; } }
+@media (max-width: 680px) { .access-modal { padding: 32px 22px; } .whop-checkout, .whop-checkout > div { min-height: 420px; } .profile-copy { display: none; } .signed-in-profile { padding-right: 4px; } .policy-header { width: calc(100% - 40px); min-height: 72px; } .policy-article { width: calc(100% - 40px); padding: 64px 0 76px; } .policy-article h1 { font-size: 48px; } .policy-intro { font-size: 16px; } .policy-footer { width: calc(100% - 40px); flex-direction: column; } }
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap');
 @import 'tailwindcss';
@@ -382,6 +382,11 @@ main { overflow: hidden; }
 .header-nav { display: flex; align-items: center; gap: 38px; font-size: 13px; font-weight: 600; color: #675d62; }
 .header-nav > a { transition: color .2s ease; }
 .header-nav > a:hover { color: var(--pink); }
+.signed-in-profile { display: inline-flex; align-items: center; gap: 9px; padding: 4px 9px 4px 4px; border: 1px solid rgba(48,41,43,.1); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.62); cursor: pointer; text-align: left; }
+.signed-in-profile img, .profile-initial { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #f2d7d2; color: var(--ink); font-size: 12px; font-weight: 700; }
+.profile-copy { display: flex; flex-direction: column; gap: 1px; line-height: 1.1; }
+.profile-copy strong { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.profile-copy small { color: var(--muted-ink); font-size: 10px; }
 .button { border: 0; border-radius: 999px; min-height: 52px; padding: 0 23px; display: inline-flex; align-items: center; justify-content: center; gap: 18px; font-weight: 600; font-size: 14px; transition: transform .22s ease, background .22s ease, box-shadow .22s ease; }
 .button:hover { transform: translateY(-2px); }
 .button:focus-visible, a:focus-visible, summary:focus-visible, .dialog-close:focus-visible { outline: 3px solid var(--soft-pink); outline-offset: 4px; }
