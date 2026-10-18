@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowRight, AudioLines, Check, ChevronDown, FolderOpen, Globe2, Menu, MessageCircle, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
+import { loadWhop } from '@whop/elements';
+import { Checkout, CheckoutElement, WhopElements } from '@whop/elements-react';
 import { useLocation } from 'wouter';
 import ThanksPage from '@/pages/thanks';
 import LegalPage from '@/pages/legal';
@@ -114,21 +116,30 @@ function CompatibilityLogoGroup({ decorative = false }: { decorative?: boolean }
 }
 
 function AccessModal({ onClose }: { onClose: () => void }) {
-  const [step, setStep] = useState<'signin' | 'checkout'>('signin');
+  const [session, setSession] = useState<Awaited<ReturnType<ReturnType<typeof createClient>['auth']['getSession']>>['data']['session']>(null);
   const [message, setMessage] = useState('');
-  const whopLink = import.meta.env.VITE_WHOP_PAYMENT_LINK as string | undefined;
+  const supabase = useMemo(() => {
+    const url = (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL) as string | undefined;
+    const key = (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) as string | undefined;
+    return url && key ? createClient(url, key) : null;
+  }, []);
+  const whop = useMemo(() => loadWhop(), []);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession));
+    return () => listener.subscription.unsubscribe();
+  }, [supabase]);
 
   const continueWithGoogle = async () => {
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
-    if (!supabaseUrl || !supabaseKey) {
-      setMessage('Google sign-in is being connected. Add the Supabase browser variables to enable it.');
+    if (!supabase) {
+      setMessage('Google sign-in is not configured for this preview yet.');
       return;
     }
-    const supabase = createClient(supabaseUrl, supabaseKey);
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: import.meta.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || window.location.origin },
+      options: { redirectTo: import.meta.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/auth/callback` },
     });
     if (error) setMessage('Could not start Google sign-in. Please try again.');
   };
@@ -137,21 +148,20 @@ function AccessModal({ onClose }: { onClose: () => void }) {
     <div className="access-overlay" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="access-modal" role="dialog" aria-modal="true" aria-labelledby="access-title">
         <button className="access-close" onClick={onClose} aria-label="Close"><X size={18} /></button>
-        {step === 'signin' ? <>
+        {!session ? <>
           <span className="pricing-badge">Myra membership</span>
           <h2 id="access-title">Start with your<br /><em>Google account.</em></h2>
           <p>Sign in once, then your 3-day Whop trial opens right here. No extra verification email.</p>
           <button className="button button-dark access-google" onClick={continueWithGoogle}><span className="google-g">G</span> Continue with Google <ArrowRight size={16} /></button>
-          <span className="access-note">Your account is used to connect your website access to the Myra Windows app.</span>
+          <span className="access-note">Your account connects your website access to the Myra Windows app.</span>
         </> : <>
           <span className="pricing-badge">You&apos;re signed in</span>
           <h2 id="access-title">Try Myra<br /><em>for three days.</em></h2>
-          <p>Complete checkout below. Whop will start your trial and tell Myra when your membership is active.</p>
-          {whopLink ? <iframe className="whop-frame" src={whopLink} title="Myra checkout" /> : <div className="checkout-placeholder">Add your Whop payment link as <code>VITE_WHOP_PAYMENT_LINK</code> to show checkout here.</div>}
-          <button className="text-link access-back" onClick={() => setStep('signin')}>Back to sign in</button>
+          <p>Complete checkout below. Your trial is applied by Whop automatically.</p>
+          <div className="whop-checkout"><WhopElements elements={whop}><Checkout plan="plan_IA1ZYXUJp6l2h"><CheckoutElement /></Checkout></WhopElements></div>
+          <p className="access-note">Signed in as {session.user.email}. After checkout, download Myra and sign in with Google in the app.</p>
         </>}
         {message && <p className="access-message" role="status">{message}</p>}
-        {step === 'signin' && <button className="access-demo" onClick={() => setStep('checkout')}>Preview checkout step</button>}
       </section>
     </div>
   );

@@ -25,7 +25,8 @@
 .access-note, .access-message { display: block; margin-top: 16px; color: #8a8184; font-size: 11px; line-height: 1.5; }
 .access-message { color: #a85d72; }
 .access-demo, .access-back { margin-top: 18px; border: 0; background: transparent; cursor: pointer; }
-.whop-frame { display: block; width: 100%; min-height: 360px; margin-top: 20px; border: 0; border-radius: 14px; background: #f5f0ec; }
+.whop-checkout { min-height: 360px; margin-top: 20px; overflow: hidden; border: 1px solid #eee7df; border-radius: 14px; background: #fff; }
+.whop-checkout > div { min-height: 360px; }
 .checkout-placeholder { margin-top: 20px; padding: 20px; border: 1px dashed #d9c9c4; border-radius: 14px; color: var(--muted-ink); font-size: 13px; line-height: 1.6; }
 .checkout-placeholder code { font-size: 11px; }
 @media (max-width: 680px) { .policy-header { width: calc(100% - 40px); min-height: 72px; } .policy-article { width: calc(100% - 40px); padding: 64px 0 76px; } .policy-article h1 { font-size: 48px; } .policy-intro { font-size: 16px; } .policy-footer { width: calc(100% - 40px); flex-direction: column; } }
