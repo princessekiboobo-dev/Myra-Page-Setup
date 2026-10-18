@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowRight, AudioLines, Check, ChevronDown, FolderOpen, Globe2, Menu, MessageCircle, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
+import { loadWhop } from '@whop/elements';
+import { Checkout, CheckoutElement, WhopElements } from '@whop/elements-react';
 import { useLocation } from 'wouter';
 import ThanksPage from '@/pages/thanks';
 import LegalPage from '@/pages/legal';
@@ -112,13 +115,72 @@ function CompatibilityLogoGroup({ decorative = false }: { decorative?: boolean }
   );
 }
 
+function AccessModal({ onClose }: { onClose: () => void }) {
+  const [session, setSession] = useState<Awaited<ReturnType<ReturnType<typeof createClient>['auth']['getSession']>>['data']['session']>(null);
+  const [message, setMessage] = useState('');
+  const supabase = useMemo(() => {
+    const url = (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL) as string | undefined;
+    const key = (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) as string | undefined;
+    return url && key ? createClient(url, key) : null;
+  }, []);
+  const whop = useMemo(() => loadWhop(), []);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession));
+    return () => listener.subscription.unsubscribe();
+  }, [supabase]);
+
+  const continueWithGoogle = async () => {
+    if (!supabase) {
+      setMessage('Google sign-in is not configured for this preview yet.');
+      return;
+    }
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: import.meta.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/auth/callback` },
+    });
+    if (error) setMessage('Could not start Google sign-in. Please try again.');
+  };
+
+  return (
+    <div className="access-overlay" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
+      <section className="access-modal" role="dialog" aria-modal="true" aria-labelledby="access-title">
+        <button className="access-close" onClick={onClose} aria-label="Close"><X size={18} /></button>
+        {!session ? <>
+          <span className="pricing-badge">Myra membership</span>
+          <h2 id="access-title">Start with your<br /><em>Google account.</em></h2>
+          <p>Sign in once, then your 3-day Whop trial opens right here. No extra verification email.</p>
+          <button className="button button-dark access-google" onClick={continueWithGoogle}><span className="google-g">G</span> Continue with Google <ArrowRight size={16} /></button>
+          <span className="access-note">Your account connects your website access to the Myra Windows app.</span>
+        </> : <>
+          <span className="pricing-badge">You&apos;re signed in</span>
+          <h2 id="access-title">Try Myra<br /><em>for three days.</em></h2>
+          <p>Complete checkout below. Your trial is applied by Whop automatically.</p>
+          <div className="whop-checkout"><WhopElements elements={whop}><Checkout plan="plan_IA1ZYXUJp6l2h"><CheckoutElement /></Checkout></WhopElements></div>
+          <p className="access-note">Signed in as {session.user.email}. After checkout, download Myra and sign in with Google in the app.</p>
+        </>}
+        {message && <p className="access-message" role="status">{message}</p>}
+      </section>
+    </div>
+  );
+}
+
 function LiquidGlass() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [location, setLocation] = useLocation();
+  const [accessOpen, setAccessOpen] = useState(false);
 
   const startDownload = () => {
     setMenuOpen(false);
     setLocation('/thanks');
+  };
+
+  const startTrial = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    setMenuOpen(false);
+    setAccessOpen(true);
   };
 
   if (location === '/thanks') {
@@ -153,7 +215,7 @@ function LiquidGlass() {
           <h1>Your computer<br />should work<br /><em>for you.</em></h1>
           <p className="hero-description">With Myra, your computer can help organize files, gather useful details from websites, and move supported Office tasks forward. You stay in control—and keep your focus on the work only you can do.</p>
           <div className="hero-actions">
-            <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-hero" aria-label="Start Myra for free" onClick={startDownload}>Start for free <ArrowRight size={16} /></a>
+            <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-download-hero" aria-label="Start Myra for free" onClick={startTrial}>Start for free <ArrowRight size={16} /></a>
             <a className="text-link" href="#how" data-testid="link-see-what-she-can-do">See how she helps <ArrowDown size={15} /></a>
           </div>
           <p className="hero-platform"><span className="windows-mark" aria-hidden="true"><i /><i /><i /><i /></span> Available for Windows · v0.1.1</p>
@@ -269,7 +331,7 @@ function LiquidGlass() {
             <li><Check size={16} /> File, web, and supported Office help</li>
             <li><Check size={16} /> You approve important actions</li>
           </ul>
-          <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-start-trial" onClick={startDownload}>Start free trial <ArrowRight size={16} /></a>
+          <a className="button button-dark" href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" data-testid="link-start-trial" onClick={startTrial}>Start free trial <ArrowRight size={16} /></a>
         </div>
         <p className="pricing-note">No charge during your trial. Subscription terms apply after the trial ends.</p>
       </section>
@@ -299,6 +361,7 @@ function LiquidGlass() {
         <a className="back-top" href="#top" data-testid="link-back-to-top">Back to top ↑</a>
       </footer>
 
+      {accessOpen && <AccessModal onClose={() => setAccessOpen(false)} />}
     </main>
   );
 }
