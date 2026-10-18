@@ -155,11 +155,8 @@ function AccessModal({ onClose }: { onClose: () => void }) {
           <button className="button button-dark access-google" onClick={continueWithGoogle}><span className="google-g">G</span> Continue with Google <ArrowRight size={16} /></button>
           <span className="access-note">Your account connects your website access to the Myra Windows app.</span>
         </> : <>
-          <span className="pricing-badge">You&apos;re signed in</span>
-          <h2 id="access-title">Try Myra<br /><em>for three days.</em></h2>
-          <p>Complete checkout below. Your trial is applied by Whop automatically.</p>
+          <h2 id="access-title" className="sr-only">Myra checkout</h2>
           <div className="whop-checkout"><WhopElements elements={whop}><Checkout plan="plan_IA1ZYXUJp6l2h"><CheckoutElement /></Checkout></WhopElements></div>
-          <p className="access-note">Signed in as {session.user.email}. After checkout, download Myra and sign in with Google in the app.</p>
         </>}
         {message && <p className="access-message" role="status">{message}</p>}
       </section>
